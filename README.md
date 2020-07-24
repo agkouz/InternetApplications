@@ -7,6 +7,6 @@
  
 Ο χρήστης θα μπορεί να επιλέξει από κατάλληλο frontend τι θέλει. Τεχνολογίες υλοποίησης:
 
-Front -> vue.js
-Back -> spring boot
-DB -> mysql
+ i)  Front -> vue.js
+ ii) Back -> spring boot
+iii) DB -> mysql
