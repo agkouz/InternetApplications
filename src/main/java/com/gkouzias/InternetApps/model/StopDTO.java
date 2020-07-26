@@ -9,4 +9,5 @@ public class StopDTO {
     private String name;
     private double lon;
     private double lat;
+
 }
