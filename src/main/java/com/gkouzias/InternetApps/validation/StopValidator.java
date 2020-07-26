@@ -29,17 +29,16 @@ public class StopValidator implements Validator {
 
         // lat validation
         if(s.getLat() < 0){
-            errors.rejectValue("lat",err.NEGATIVE_LAT);
+            errors.rejectValue("lat", err.NEGATIVE_LAT, err.LAT_MSG);
         }else if(s.getLat() > 40){
-            errors.rejectValue("lat", err.OVER_LAT);
-
+            errors.rejectValue("lat", err.OVER_LAT, err.LAT_MSG);
         }
 
         // lon validation
         if(s.getLon() < 0){
-            errors.rejectValue("lon", err.NEGATIVE_LON);
+            errors.rejectValue("lon", err.NEGATIVE_LON, err.LON_MSG);
         }else if(s.getLon() > 40){
-            errors.rejectValue("lon", err.OVER_LON);
+            errors.rejectValue("lon", err.OVER_LON, err.LON_MSG);
         }
     }
 }

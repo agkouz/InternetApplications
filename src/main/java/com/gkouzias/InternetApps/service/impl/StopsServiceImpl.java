@@ -30,6 +30,19 @@ public class StopsServiceImpl implements StopsService {
         return stopsRepository.existsByName(name);
     }
 
+    // FIND STOP BY ID - return null if not found
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
+    public Stop findById(int id) {
+        return stopsRepository.findById(id).orElse(null);
+    }
+
+    // FIND STOP BY NAME -- return null if not found
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
+    public Stop findByName(String name) {
+        return stopsRepository.findByName(name).orElse(null);
+    }
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
@@ -37,6 +50,7 @@ public class StopsServiceImpl implements StopsService {
         return stopsRepository.findByNameAndLat(name, lat).orElseThrow(() -> new RuntimeException("find by name and lat xxx"));
     }
 
+    // FIND STOP BY NAME (STARTING WITH) -- return null if not found
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
     public List<Stop> findByNameStartingWith(String name) {

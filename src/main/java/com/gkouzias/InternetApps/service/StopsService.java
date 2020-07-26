@@ -15,10 +15,18 @@ public interface StopsService {
     boolean existsByName(String name);
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    Stop findByNameAndLat(String name, double lat);
+    Stop findById(int id);
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    Stop findByName(String name);
+
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     List<Stop> findByNameStartingWith(String name);
+
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    Stop findByNameAndLat(String name, double lat);
 
 
 
