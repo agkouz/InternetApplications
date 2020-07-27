@@ -31,6 +31,8 @@ public class StopController {
     @Autowired
     private StopError errCodes;
 
+
+    // CREATE STOP
     @PostMapping("/api/stops/createStop")
     public ResponseEntity<?> createStopController(@RequestBody Stop stop, BindingResult result){
 
@@ -76,7 +78,6 @@ public class StopController {
         List<Stop> stops = stopsService.findByNameStartingWith(name);
         if(stops.isEmpty())  return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
         else {
-
             Type type = new TypeToken<List<StopDTO>>(){}.getType();
             List<StopDTO> stopsDTO = m.map(stops, type);
             return new ResponseEntity<>(stopsDTO, HttpStatus.OK);
