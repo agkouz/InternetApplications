@@ -12,6 +12,9 @@ public interface StopsService {
 
     // extra stuff
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    List<Stop> findAll();
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     boolean existsByName(String name);
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
