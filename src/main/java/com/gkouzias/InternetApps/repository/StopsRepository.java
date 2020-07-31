@@ -11,6 +11,7 @@ public interface StopsRepository extends JpaRepository<Stop, Integer> {
     // extra stuff
     boolean existsByName(String name);                              // for duplicates
 
+    List<Stop> findAll();                                           // get all stops
     Optional<Stop> findById(int id);                                // find stop by id
     Optional<Stop> findByName(String name);                         // find stop by name
     List<Stop> findByNameStartingWith(String name);       // find stops starting with ..

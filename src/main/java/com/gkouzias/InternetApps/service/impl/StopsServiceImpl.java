@@ -57,6 +57,12 @@ public class StopsServiceImpl implements StopsService {
         return stopsRepository.findByNameStartingWith(name);
     }
 
+    // FIND ALL
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
+    public List<Stop> findAll() {
+        return stopsRepository.findAll();
+    }
 
 
 
