@@ -24,6 +24,7 @@ export default {
     footer{
         background:#222;
         padding: 6px;
+        clear: both;
     }
 
     p{

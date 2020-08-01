@@ -26,7 +26,7 @@ export default {
         // change active tab and emmit changeComp to change component
         changeComp(comp){
             this.current = {};
-            this.current[comp] = 'current'
+            this.current[comp] = 'active'
             this.$emit('changeComp', comp);
         }
     }
