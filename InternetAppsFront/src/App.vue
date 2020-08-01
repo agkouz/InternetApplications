@@ -39,5 +39,5 @@ export default {
 </script>
 
 <style>
-  @import './assets/styles/layout.css';
+  /*@import './assets/styles/layout.css';*/
 </style>
