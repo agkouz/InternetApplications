@@ -20,6 +20,7 @@ public class Path {
     @Column(name="name")
     private String name;
 
+
     // one stop is used as origin at many paths
     // a path has only one stop as origin (cannot have > 1)
     @ManyToOne
