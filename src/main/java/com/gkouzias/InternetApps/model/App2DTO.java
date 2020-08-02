@@ -18,14 +18,13 @@ public class App2DTO {
     private String name;
     private double total_distance;
 
-    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
-    private List<Point> coordinates;
-
     // ORIGIN STOP
     private int origin_id;
     private String origin_name;
     private double origin_lat;
     private double origin_lon;
+    private String origin_weather_main;
+    private String origin_weather_desc;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime origin_next_arrival_at;
@@ -37,6 +36,10 @@ public class App2DTO {
     private double dest_lon;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dest_next_arrival_at;
+
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
+    private List<Point> coordinates;
+
 
     @Data
     @Getter
@@ -77,13 +80,14 @@ public class App2DTO {
         this.name = path.getName();
 
 
-        System.out.println("PATH: "+path.getId()+" -- distance: "+this.total_distance);
         // ORIGIN STOP
         this.origin_id = path.getOrigin_stop().getId();
         this.origin_name = path.getOrigin_stop().getName();
         this.origin_lat = path.getOrigin_stop().getLat();
         this.origin_lon = path.getOrigin_stop().getLon();
         this.origin_next_arrival_at = path.getOrigin_stop().getArrival().getLast_arrival().plusMinutes(path.getOrigin_stop().getArrival().getIn()); // calculate next arrival
+        this.origin_weather_main = path.getOrigin_stop().getWeatherCondition().getWeather_main();
+        this.origin_weather_desc = path.getOrigin_stop().getWeatherCondition().getWeather_desc();
 
         // DESTINATION STOP
         this.dest_id = path.getDestination_stop().getId();

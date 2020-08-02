@@ -29,4 +29,7 @@ public class Stop {
 
     @OneToOne(mappedBy = "stop")
     private Arrival arrival;
+
+    @OneToOne(mappedBy = "stopWc")
+    private WeatherCondition weatherCondition;
 }
