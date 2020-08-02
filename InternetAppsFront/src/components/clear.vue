@@ -219,48 +219,49 @@ export default {
 		filter(type){
 			if(type === 'all') this.list = this.paths;
 			else this.list = this.clear_paths;
+		},
+		// --------------------------------------------------------------------------------------------------------------------------------------------------
+
+		// get all paths
+		// --------------------------------------------------------------------------------------------------------------------------------------------------
+		get_paths(){
+			
+			// CORS
+			let headers = {
+				'Access-Control-Allow-Origin': 'http://localhost:8081/'
+			};
+
+			this.$http.get("http://localhost:8080/api/app2", {headers})
+			.then((res) => {
+				let i;
+				this.paths = res.body;	// paths list
+				this.list = res.body;	// view list
+				this.clear_paths = [];	// clear weather paths
+				for(i=0; i<this.paths.length; i++){
+					this.total[this.paths[i].id] = this.paths[i];	// paths indexed list
+					if(this.paths[i].origin_weather_main === 'Clear') this.clear_paths.push(this.paths[i]);  // keep clear weather origin stops here
+				}
+			})
 		}
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
 	},
 	mounted(){
-		this.disabled = 1;
 
+		// create a map
+		this.mymap = this.$refs.myMap.mapObject.setView([40.481426, 23.179408], 13);
+		
+		// tile for our map
+		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+				'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			id: 'mapbox/streets-v11',
+			tileSize: 512,
+			zoomOffset: -1
+		}).addTo(this.mymap);
 
-						// create a map
-			this.mymap = this.$refs.myMap.mapObject.setView([40.481426, 23.179408], 13);
-			
-			// tile for our map
-			L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-				maxZoom: 18,
-				attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-					'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-					'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-				id: 'mapbox/streets-v11',
-				tileSize: 512,
-				zoomOffset: -1
-			}).addTo(this.mymap);
-
-		// get all paths
-		// CORS
-		let headers = {
-			'Access-Control-Allow-Origin': 'http://localhost:8081/'
-		};
-
-		// do a get request on our api --> will return all stops
-		this.$http.get("http://localhost:8080/api/app2", {headers})
-		.then((res) => {
-			
-			let i;
-			this.paths = res.body;
-			this.list = res.body;
-			for(i=0; i<this.paths.length; i++){
-				this.total[this.paths[i].id] = this.paths[i];
-			}
-
-
-
-			//this.weather_check();
-		})
+		this.get_paths();
 	},
 	
 }
