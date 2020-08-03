@@ -126,7 +126,7 @@ export default {
 			mymap: {},
 			weather_info:[],
 			total:[],			// holds all paths, indexed by path id
-			selected: 'all',
+			filtered: 'all',	// holds filtered state
 
 			
 			// search text
@@ -154,8 +154,9 @@ export default {
                 popupAnchor: [-3, -76],
 			}),
 			
+			// timeout
 			handle:0,
-			timeout:3000
+			timeout:1000 * 60
 		}
 	},
 	methods:{
@@ -203,12 +204,11 @@ export default {
 		// FILTER USING WEATHER CONDITIONS
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
 		filter(type){
-			this.selected=type;
+			this.filtered=type;
 			if(type === 'all') {
 				this.list = this.paths;
 			}
 			else {
-				this.get_paths('Clear');
 				this.list = this.clear_paths;
 			}
 		},
@@ -217,6 +217,7 @@ export default {
 		// get all paths
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
 		get_paths(weather){
+			console.log(weather);
 			// CORS
 			let headers = {
 				'Access-Control-Allow-Origin': 'http://localhost:8081/'
@@ -232,12 +233,22 @@ export default {
 					if(this.paths[i].origin_weather_main === weather) this.clear_paths.push(this.paths[i]);  // keep clear weather origin stops here
 				}
 				
-				if(this.selected === 'all') this.list = this.paths;
+				if(this.filtered === 'all') this.list = this.paths;
 				else this.list = this.clear_paths;
-
+				console.log(this.clear_paths);
+				console.log(this.list);
 				
+				/* DEBUG
+				clearTimeout(this.handle);
+				let next = Math.ceil(Math.random() * 4);
+				if(next == 1) next = 'Clear';
+				else if(next == 2) next = 'Clouds';
+				else if(next == 3) next = 'Rain';
+				else if(next == 4) next = 'Thunderstorm';
+				console.log(next);
+				this.handle = setInterval(this.get_paths, this.timeout, next);
+				*/
 
-				//if(this.handle === 0) this.handle = setInterval(this.get_paths.bind('Clear'), this.timeout);
 				console.log("CALLED");
 			})
 			
@@ -248,7 +259,7 @@ export default {
 		let timeout = 3000;
 		// create a map
 		this.mymap = this.$refs.myMap.mapObject.setView([40.481426, 23.179408], 13);
-		this.selected = 'all';
+		this.filtered = 'all';
 		// tile for our map
 		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 			maxZoom: 18,
@@ -261,6 +272,7 @@ export default {
 		}).addTo(this.mymap);
 
 		this.get_paths('Clear');
+		if(this.handle === 0) this.handle = setInterval(this.get_paths, this.timeout, 'Clear');
 	},
 	destroyed(){
 		while(this.handle > 0){
