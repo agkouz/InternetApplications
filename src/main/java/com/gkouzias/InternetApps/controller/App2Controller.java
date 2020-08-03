@@ -10,6 +10,7 @@ import com.gkouzias.InternetApps.service.StopsService;
 import com.gkouzias.InternetApps.service.WeatherConditionsService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,14 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/app2")
 public class App2Controller {
     @Autowired
     private PathsService pathsService;
 
-    private String api_key = "c6f4574a00f81f656b556669e116595e";
+
 
     @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
     @GetMapping("")
@@ -55,7 +57,9 @@ public class App2Controller {
     // call weather api each 5 minutes to update our db with weather conditions
     @Scheduled(fixedDelay = 5*60*1000)
     public void weatherUpdate() {
-        System.out.println("start");
+        log.info("start");
+
+        final String api_key = "c6f4574a00f81f656b556669e116595e";
         RestTemplate restTemplate = new RestTemplate();
         List<Stop> stops = stopsService.findAll();
         for(Stop stop:stops){
@@ -76,7 +80,7 @@ public class App2Controller {
             wc.setWeather_main(weather_main);
             weatherConditionsService.save(wc);
         }
-        System.out.println("stop");
+        log.info("end");
     }
 
 
