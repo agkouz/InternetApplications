@@ -4,9 +4,10 @@
 	<div id="selectionContainer">
 		<ul class="w3-ul w3-card-4">
 			<li class="w3-bar">
-				<input ref="search" type="text" :disabled="disabled == 1"/> <br/><br/>
+				<!-- :disabled="disabled == 1" -->
+				<input ref="search" type="text"/> <br/><br/>
 				<span @click="filter('all')" class="button">All</span>
-				<span @click="filter('clear')" class="button">Clear weather</span>
+				<span @click="filter('Clear')" class="button">Clear weather</span>
 			</li>
 			<li class="w3-bar" v-for="path in list" v-bind:key="path" @click="selected(path.id)">{{path.name}}</li>
 			
@@ -125,6 +126,8 @@ export default {
 			mymap: {},
 			weather_info:[],
 			total:[],			// holds all paths, indexed by path id
+			selected: 'all',
+
 			
 			// search text
 			disabled: 1,
@@ -149,9 +152,10 @@ export default {
                 iconSize: [58, 85],
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76],
-            }),
-
+			}),
 			
+			handle:0,
+			timeout:3000
 		}
 	},
 	methods:{
@@ -195,37 +199,24 @@ export default {
 		},
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
 
-		// CHECK WEATHER INITIALLY USING EXTERNAL API
-		// --------------------------------------------------------------------------------------------------------------------------------------------------
-		async weather_check(){
-		
-			let app_id = 'c6f4574a00f81f656b556669e116595e';
-			let i; let lat; let lon;
-			for(i=0; i<this.paths.length; i++){
-				lat = this.paths[i].origin_lat; lon = this.paths[i].origin_lon;
-				await this.$http.get("http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&APPID="+app_id).then((res)=> {
-					console.log(res.body.weather[0].main);
-					this.weather_info[this.paths[i].id] = res.body.weather[0].main;
-					//if(res.body.weather[0].main !== 'Rain' && res.body.weather[0].main !== 'Thunderstorm') this.clear_paths.push(this.paths[i]);
-					if(res.body.weather[0].main === 'Clear') this.clear_paths.push(this.paths[i]);
-				});
-			}
-			this.disabled = 0;
-		},
-		// --------------------------------------------------------------------------------------------------------------------------------------------------
 
 		// FILTER USING WEATHER CONDITIONS
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
 		filter(type){
-			if(type === 'all') this.list = this.paths;
-			else this.list = this.clear_paths;
+			this.selected=type;
+			if(type === 'all') {
+				this.list = this.paths;
+			}
+			else {
+				this.get_paths('Clear');
+				this.list = this.clear_paths;
+			}
 		},
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
 
 		// get all paths
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
-		get_paths(){
-			
+		get_paths(weather){
 			// CORS
 			let headers = {
 				'Access-Control-Allow-Origin': 'http://localhost:8081/'
@@ -235,21 +226,29 @@ export default {
 			.then((res) => {
 				let i;
 				this.paths = res.body;	// paths list
-				this.list = res.body;	// view list
 				this.clear_paths = [];	// clear weather paths
 				for(i=0; i<this.paths.length; i++){
 					this.total[this.paths[i].id] = this.paths[i];	// paths indexed list
-					if(this.paths[i].origin_weather_main === 'Clear') this.clear_paths.push(this.paths[i]);  // keep clear weather origin stops here
+					if(this.paths[i].origin_weather_main === weather) this.clear_paths.push(this.paths[i]);  // keep clear weather origin stops here
 				}
+				
+				if(this.selected === 'all') this.list = this.paths;
+				else this.list = this.clear_paths;
+
+				
+
+				//if(this.handle === 0) this.handle = setInterval(this.get_paths.bind('Clear'), this.timeout);
+				console.log("CALLED");
 			})
+			
 		}
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
 	},
 	mounted(){
-
+		let timeout = 3000;
 		// create a map
 		this.mymap = this.$refs.myMap.mapObject.setView([40.481426, 23.179408], 13);
-		
+		this.selected = 'all';
 		// tile for our map
 		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 			maxZoom: 18,
@@ -261,9 +260,14 @@ export default {
 			zoomOffset: -1
 		}).addTo(this.mymap);
 
-		this.get_paths();
+		this.get_paths('Clear');
 	},
-	
+	destroyed(){
+		while(this.handle > 0){
+			clearTimeout(this.handle);
+			this.handle--;
+		}
+	}
 }
 </script>
 
