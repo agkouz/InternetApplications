@@ -1,19 +1,19 @@
 <template>
 <div id="container">
-	<form>
+	<!--<form> -->
 	<div id="selectionContainer">
 		<ul class="w3-ul w3-card-4">
 			<li class="w3-bar">
 				<!-- :disabled="disabled == 1" -->
-				<input ref="search" type="text"/> <br/><br/>
+				<input ref="search" v-model="search_input" type="text"/> <br/><br/>	<!-- search_input holds search query -->
 				<span @click="filter('all')" class="button">All</span>
 				<span @click="filter('Clear')" class="button">Clear weather</span>
 			</li>
-			<li class="w3-bar" v-for="path in list" v-bind:key="path" @click="selected(path.id)">{{path.name}}</li>
+			<li class="w3-bar" v-for="path in filteredList()" v-bind:key="path" @click="selected(path.id)">{{path.name}}</li>	<!-- get presented list from filteredList() method -->
 			
 		</ul>
 	</div>
-	</form>
+	<!--</form> -->
 	<div id="mapContainer">
 		<l-map id="map" ref="myMap"> </l-map>
 	</div>
@@ -118,6 +118,7 @@ export default {
 	},
 	data () {
 		return {
+			search_input: '',
 			
 			// basic
 			list:[],			// list of paths to show
@@ -200,9 +201,18 @@ export default {
 		},
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
 
+		
+		// FILTERS
+		// --------------------------------------------------------------------------------------------------------------------------------------------------
+		
+		// FILTER USING SEARCH QUERY
+		filteredList(){
+			return this.list.filter(path => {
+        		return path.name.toLowerCase().includes(this.search_input.toLowerCase());
+      		});
+		},
 
 		// FILTER USING WEATHER CONDITIONS
-		// --------------------------------------------------------------------------------------------------------------------------------------------------
 		filter(type){
 			this.filtered=type;
 			if(type === 'all') {
