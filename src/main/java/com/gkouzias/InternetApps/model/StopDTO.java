@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 *   that holds the next arrival
 * */
 
+@NoArgsConstructor  // map works with this only
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class StopDTO {
     private int id;

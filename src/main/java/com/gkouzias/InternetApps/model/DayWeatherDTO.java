@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Data
-public class App3DTO {
+public class DayWeatherDTO {
 
     private String weather_class;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -16,7 +16,7 @@ public class App3DTO {
     private int total;
 
 
-    public App3DTO(String weather_class, int total, String event_date) {
+    public DayWeatherDTO(String weather_class, int total, String event_date) {
         this.weather_class = weather_class;
         this.total = total;
 

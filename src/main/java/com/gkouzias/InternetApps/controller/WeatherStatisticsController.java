@@ -2,7 +2,7 @@ package com.gkouzias.InternetApps.controller;
 
 
 import com.gkouzias.InternetApps.domain.Transport;
-import com.gkouzias.InternetApps.model.App3DTO;
+import com.gkouzias.InternetApps.model.DayWeatherDTO;
 import com.gkouzias.InternetApps.service.DayWeatherService;
 import com.gkouzias.InternetApps.service.TransportService;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +52,7 @@ public class WeatherStatisticsController {
             String month2 = "____" + String.valueOf(Integer.parseInt(month) + 1) + "__";
             List<Tuple> transportationInfo = dayWeatherService.findMaxPerWeatherDay(month1, month2);
 
-            return new ResponseEntity<>(transportationInfo.stream().map(t -> new App3DTO((String)t.get("weather_class"), (int)t.get("total"), (String)t.get("event_date")))
+            return new ResponseEntity<>(transportationInfo.stream().map(t -> new DayWeatherDTO((String)t.get("weather_class"), (int)t.get("total"), (String)t.get("event_date")))
                     .collect(Collectors.toList()), HttpStatus.OK);
         }
 

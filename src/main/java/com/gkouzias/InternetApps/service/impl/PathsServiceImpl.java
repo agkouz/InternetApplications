@@ -6,7 +6,6 @@ import com.gkouzias.InternetApps.model.PointDTO;
 import com.gkouzias.InternetApps.model.StopDTO;
 import com.gkouzias.InternetApps.repository.PathsRepository;
 import com.gkouzias.InternetApps.service.PathsService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,21 +24,14 @@ public class PathsServiceImpl implements PathsService {
         return pathsRepository.findAll();
     }
 
+    // foreach path, create and set it's DTO and calculate it's polyline ditsance and coords
     @Override
     public PathDTO calculate_coords_distance(Path path) {
-        ModelMapper m = new ModelMapper();
-        m.getConfiguration().setAmbiguityIgnored(true);
-
         PathDTO pathDTO = new PathDTO();
         pathDTO.setId(path.getId());
-        pathDTO.setDestination_stop(m.map(path.getDestination_stop(), StopDTO.class));
-        pathDTO.setOrigin_stop(m.map(path.getOrigin_stop(), StopDTO.class));
+        pathDTO.setOrigin_stop(new StopDTO(path.getOrigin_stop()));             // next_arrival and weather will be set
+        pathDTO.setDestination_stop(new StopDTO(path.getDestination_stop()));
         pathDTO.setName(path.getName());
-
-
-        // set next arrival and weather for pathDTO
-        pathDTO.getOrigin_stop().setNext_arrival(path.getOrigin_stop().getArrival().getLast_arrival().plusMinutes(path.getOrigin_stop().getArrival().getIn())); // calculate next arrival)
-        pathDTO.getOrigin_stop().setWeather(path.getOrigin_stop().getWeatherCondition().getWeather_main());
 
 
         // calculate distance
