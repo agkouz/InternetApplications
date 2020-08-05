@@ -30,12 +30,6 @@ public class Transport {
     @Column(name="total_users")
     private int totalUsers;
 
-    @Column(name="cell_municipality")
-    private String cellMunicipality;
-
-    @Column(name="prev_cell_municipality")
-    private String pcellMunicipality;
-
     @Id
     @Column(name="event_date")
     private String eventDate;
@@ -44,6 +38,4 @@ public class Transport {
     @Column(name="time_period")
     private double timePeriod;
 
-    @Column(name="week_day")
-    private double weekDay;
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 @Service
@@ -31,6 +32,12 @@ public class DayWeatherServiceImpl implements DayWeatherService {
     @Override
     public List<?> findAllSummed() {
         return dayWeatherRepository.findAllSummed();
+    }
+
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    @Override
+    public List<Tuple> findMaxPerWeatherDay(String month1, String month2) {
+        return dayWeatherRepository.findMaxPerWeatherDay(month1, month2);
     }
 
 
