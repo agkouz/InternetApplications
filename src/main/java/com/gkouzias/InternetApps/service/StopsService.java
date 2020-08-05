@@ -5,7 +5,7 @@ import com.gkouzias.InternetApps.domain.Stop;
 import java.util.List;
 
 public interface StopsService {
-    Stop save(Stop stop);   // save object @ DB
-    List<Stop> findAll();
-    Stop findById(int id);
+    Stop save(Stop stop);   // save
+    List<Stop> findAll();   // all
+    Stop findById(int id);  // by id
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gkouzias.InternetApps.domain.Stop;
 import com.gkouzias.InternetApps.model.StopDTO;
 import com.gkouzias.InternetApps.service.StopsService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +28,7 @@ public class StopsController {
     @GetMapping("")
     ResponseEntity<?> getStopsController() throws JsonProcessingException {
         List<Stop> stops = stopsService.findAll();
-        ModelMapper m = new ModelMapper();
-
         if(stops.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
-        //return new ResponseEntity<>(stops.stream().map(App1DTO::new).collect(Collectors.toList()), HttpStatus.OK);
         return new ResponseEntity<>(stops.stream().map(StopDTO::new).collect(Collectors.toList()), HttpStatus.OK);
     }
 

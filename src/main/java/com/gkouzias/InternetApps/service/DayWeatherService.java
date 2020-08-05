@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface DayWeatherService {
-    DayWeather save(DayWeather dw);   // save object @ DB
-    List<DayWeather> findAll();
-    List<Tuple> findMaxPerWeatherDay(String month1, String month2);
-
-    Map<String, Long> populateDayWeather(List<Transport> transports);
+    DayWeather save(DayWeather dw);                                         // save
+    List<DayWeather> findAll();                                             // all
+    List<Tuple> findMaxPerWeatherDay(String month1, String month2);         // find max and day foreach weather class
+    Map<String, Long> populateDayWeather(List<Transport> transports);       // initialize our database (DayWeather table)
 }

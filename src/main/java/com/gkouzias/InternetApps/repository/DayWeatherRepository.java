@@ -9,9 +9,8 @@ import java.util.List;
 
 public interface DayWeatherRepository extends JpaRepository<DayWeather, Integer> {
 
-    @Query(value="SELECT MAX(dw.totalUsers), dw.weatherClass FROM DayWeather dw GROUP BY dw.weatherClass")
-    List<?> findAllSummed();
-
+    // native query to find max transports per weather type and the day which this occurs.
+    // the result will follow the DayWeather Entity format (join with the same table)
     @Query(value = "SELECT max_per_weather.weather_class, max_per_weather.total, event_date FROM " +
             "(SELECT MAX(total_users) as total, weather_class FROM day_weather dw1 WHERE event_date LIKE ?1 OR event_date LIKE ?2 GROUP BY weather_class) max_per_weather " +
             "JOIN day_weather " +

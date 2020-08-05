@@ -37,7 +37,6 @@ public class PathsServiceImpl implements PathsService {
         // calculate distance
         // -------------------------------------------------------------------------------------------------------------
         String coords[] = path.getPolyline().split(" "); // split polyline string given using space
-        double total_distance = 0;   // init total distance
         double prev_lat = path.getOrigin_stop().getLat();  // init starting point
         double prev_lon = path.getOrigin_stop().getLon();
 
