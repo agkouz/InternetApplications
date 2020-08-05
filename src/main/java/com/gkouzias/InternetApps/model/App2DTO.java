@@ -54,8 +54,7 @@ public class App2DTO {
      * lat1, lon1 Start point lat2, lon2 End point
      * @returns Distance in Meters
      */
-    private void calc_dst(double lat1, double lon1, double lat2,
-                                  double lon2) {
+    private void calc_dst(double lat1, double lon1, double lat2, double lon2) {
 
         final int R = 6371; // Radius of the earth
 

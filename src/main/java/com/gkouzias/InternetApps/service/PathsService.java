@@ -10,4 +10,6 @@ public interface PathsService {
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     List<Path> findAll();
 
+
+
 }

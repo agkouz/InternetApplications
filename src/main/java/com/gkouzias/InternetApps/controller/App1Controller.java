@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/app1")
@@ -25,26 +25,21 @@ public class App1Controller {
     // get all stops
     @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
     @GetMapping("")
-    ResponseEntity<?> viewStopsController() throws JsonProcessingException {
+    ResponseEntity<?> getStopsController() throws JsonProcessingException {
         List<Stop> stops = stopsService.findAll();
         ModelMapper m = new ModelMapper();
 
-        if(stops.isEmpty())  return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
-        else {
-            List<App1DTO> res = new ArrayList<App1DTO>();
-            for(Stop stop:stops) res.add(new App1DTO(stop));
-            return new ResponseEntity<>(res, HttpStatus.OK);
-        }
-
+        if(stops.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(stops.stream().map(App1DTO::new).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     // get speciffic stop information
     @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping("/{stop_id}")
-    ResponseEntity<?> viewStop(@PathVariable int stop_id){
+    ResponseEntity<?> getStopController(@PathVariable int stop_id){
         Stop stop = stopsService.findById(stop_id);
         if(stop == null) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
-        else return new ResponseEntity<>(new App1DTO(stop), HttpStatus.OK);
+        return new ResponseEntity<>(new App1DTO(stop), HttpStatus.OK);
     }
 
 

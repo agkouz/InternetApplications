@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -31,22 +31,6 @@ public class App2Controller {
     @Autowired
     private PathsService pathsService;
 
-
-
-    @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
-    @GetMapping("")
-    ResponseEntity<?> viewStopsController(){
-        List<Path> paths = pathsService.findAll();
-        if(paths.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
-        else {
-            List<App2DTO> app2DTOs = new ArrayList<>();
-            for(Path path:paths)  app2DTOs.add(new App2DTO(path));
-            return new ResponseEntity<>(app2DTOs, HttpStatus.OK);
-        }
-
-    }
-
-
     @Autowired
     private WeatherConditionsService weatherConditionsService;
 
@@ -54,15 +38,24 @@ public class App2Controller {
     private StopsService stopsService;
 
 
+    // returns all paths with weather conditions
+    @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
+    @GetMapping("")
+    ResponseEntity<?> getPathsController(){
+        List<Path> paths = pathsService.findAll();
+        if(paths.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
+        else return new ResponseEntity<>(paths.stream().map(App2DTO::new).collect(Collectors.toList()), HttpStatus.OK);
+    }
+
     // call weather api each 5 minutes to update our db with weather conditions
     @Scheduled(fixedDelay = 5*60*1000)
     public void weatherUpdate() {
-        log.info("start");
+        log.info("start - weather update");
 
         final String api_key = "c6f4574a00f81f656b556669e116595e";
         RestTemplate restTemplate = new RestTemplate();
         List<Stop> stops = stopsService.findAll();
-        for(Stop stop:stops){
+        stops.forEach(stop -> {
             // for each stop do a request using lat and lon to get it's weather info
             final String nameURI = "http://api.openweathermap.org/data/2.5/weather?lat="+stop.getLat()+"&lon="+stop.getLon()+"&APPID="+api_key;
             String res = restTemplate.getForObject(nameURI, String.class);
@@ -79,21 +72,10 @@ public class App2Controller {
             wc.setWeather_desc(weather_desc);
             wc.setWeather_main(weather_main);
             weatherConditionsService.save(wc);
-        }
-        log.info("end");
+
+        });
+
+        log.info("end - weather update");
     }
-
-
-    @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
-    @GetMapping("/test")
-    ResponseEntity<?> test(){
-        //WeatherCondition weatherCondition = weatherConditionService.findByStopWc(11);
-        Stop origin = stopsService.findById(11);
-        WeatherCondition weatherCondition = weatherConditionsService.findByStopWc(origin);
-        weatherCondition.setWeather_main("aaa");
-        weatherConditionsService.save(weatherCondition);
-        return new ResponseEntity<>("a", HttpStatus.OK);
-    }
-
 
 }

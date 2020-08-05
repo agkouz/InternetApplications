@@ -33,10 +33,12 @@ public class App3Controller {
     DayWeatherService dayWeatherService;
 
 
+    // populates database with total transports per weather condition - day
+    // calls the given api for all available data from created view (table1 UNION table2)
     @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
     @GetMapping("/populate")
     ResponseEntity<?> populateDayWeatherController(){
-        List<Transport> transports = transportService.findAll();
+        List<Transport> transports = transportService.findAll();    // find all transports
 
         if(transports.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
         else {

@@ -22,12 +22,6 @@ public class WeatherConditionsServiceImpl implements WeatherConditionsService {
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
-    public WeatherCondition findById(int id) {
-        return weatherConditionRepository.findById(id).orElse(null);
-    }
-
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    @Override
     public WeatherCondition findByStopWc(Stop origin_stop) {
         return weatherConditionRepository.findByStopWc(origin_stop).orElse(null);
     }

@@ -30,12 +30,6 @@ public class DayWeatherServiceImpl implements DayWeatherService {
 
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     @Override
-    public List<?> findAllSummed() {
-        return dayWeatherRepository.findAllSummed();
-    }
-
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    @Override
     public List<Tuple> findMaxPerWeatherDay(String month1, String month2) {
         return dayWeatherRepository.findMaxPerWeatherDay(month1, month2);
     }

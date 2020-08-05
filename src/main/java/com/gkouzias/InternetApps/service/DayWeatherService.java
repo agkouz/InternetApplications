@@ -8,6 +8,5 @@ import java.util.List;
 public interface DayWeatherService {
     DayWeather save(DayWeather dw);   // save object @ DB
     List<DayWeather> findAll();
-    List<?> findAllSummed();
     List<Tuple> findMaxPerWeatherDay(String month1, String month2);
 }
