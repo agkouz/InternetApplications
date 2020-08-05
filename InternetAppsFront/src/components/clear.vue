@@ -169,14 +169,14 @@ export default {
 			// path information
 			const path = this.total[path_id];
 			this.path_name = path.name;
-			this.origin_stop_name = path.origin_name;
-			this.destination_stop_name = path.dest_name;
-			this.origin_lat = path.origin_lat;
-			this.origin_lon = path.origin_lon;
-			this.dest_lat = path.dest_lat;
-			this.dest_lon = path.dest_lon;
+			this.origin_stop_name = path.origin_stop.name;
+			this.destination_stop_name = path.destination_stop.name;
+			this.origin_lat = path.origin_stop.lat;
+			this.origin_lon = path.origin_stop.lon;
+			this.dest_lat = path.destination_stop.lat;
+			this.dest_lon = path.destination_stop.lon;
 			this.distance = path.total_distance;
-			this.origin_next_arrival_at = new Date(path.origin_next_arrival_at);
+			this.origin_next_arrival_at = new Date(path.origin_stop.next_arrival);
 
 
 			// markers

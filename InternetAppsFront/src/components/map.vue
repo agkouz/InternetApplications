@@ -155,7 +155,8 @@ export default {
             // do a get request on our api --> will return current stop
             this.$http.get("http://localhost:8080/api/app1/"+this.tar_id, {headers})
             .then((res) =>{ 
-                this.next_arrival = new Date(Date.parse(res.body.last_arrival_at) + res.body.next_arrival_in * 60000);
+                console.log(res);
+                this.next_arrival = new Date(res.body.next_arrival);
             });
 
 

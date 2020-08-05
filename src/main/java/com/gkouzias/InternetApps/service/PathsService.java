@@ -1,15 +1,13 @@
 package com.gkouzias.InternetApps.service;
 
 import com.gkouzias.InternetApps.domain.Path;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import com.gkouzias.InternetApps.model.PathDTO;
 
 import java.util.List;
 
 public interface PathsService {
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     List<Path> findAll();
 
-
+    PathDTO calculate_coords_distance(Path path);
 
 }

@@ -4,7 +4,6 @@ package com.gkouzias.InternetApps.controller;
 import com.gkouzias.InternetApps.domain.Path;
 import com.gkouzias.InternetApps.domain.Stop;
 import com.gkouzias.InternetApps.domain.WeatherCondition;
-import com.gkouzias.InternetApps.model.App2DTO;
 import com.gkouzias.InternetApps.service.PathsService;
 import com.gkouzias.InternetApps.service.StopsService;
 import com.gkouzias.InternetApps.service.WeatherConditionsService;
@@ -44,7 +43,8 @@ public class App2Controller {
     ResponseEntity<?> getPathsController(){
         List<Path> paths = pathsService.findAll();
         if(paths.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
-        else return new ResponseEntity<>(paths.stream().map(App2DTO::new).collect(Collectors.toList()), HttpStatus.OK);
+        //else return new ResponseEntity<>(paths.stream().map(App2DTO::new).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<>(paths.stream().map(pathsService::calculate_coords_distance).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     // call weather api each 5 minutes to update our db with weather conditions
