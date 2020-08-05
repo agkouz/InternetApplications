@@ -240,7 +240,7 @@ export default {
 				this.clear_paths = [];	// clear weather paths
 				for(i=0; i<this.paths.length; i++){
 					this.total[this.paths[i].id] = this.paths[i];	// paths indexed list
-					if(this.paths[i].origin_weather_main === weather) this.clear_paths.push(this.paths[i]);  // keep clear weather origin stops here
+					if(this.paths[i].origin_stop.weather === weather) this.clear_paths.push(this.paths[i]);  // keep clear weather origin stops here
 				}
 				
 				if(this.filtered === 'all') this.list = this.paths;

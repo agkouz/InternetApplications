@@ -28,6 +28,7 @@ public class PathsServiceImpl implements PathsService {
     @Override
     public PathDTO calculate_coords_distance(Path path) {
         ModelMapper m = new ModelMapper();
+        m.getConfiguration().setAmbiguityIgnored(true);
 
         PathDTO pathDTO = new PathDTO();
         pathDTO.setId(path.getId());
@@ -35,7 +36,11 @@ public class PathsServiceImpl implements PathsService {
         pathDTO.setOrigin_stop(m.map(path.getOrigin_stop(), StopDTO.class));
         pathDTO.setName(path.getName());
 
+
+        // set next arrival and weather for pathDTO
         pathDTO.getOrigin_stop().setNext_arrival(path.getOrigin_stop().getArrival().getLast_arrival().plusMinutes(path.getOrigin_stop().getArrival().getIn())); // calculate next arrival)
+        pathDTO.getOrigin_stop().setWeather(path.getOrigin_stop().getWeatherCondition().getWeather_main());
+
 
         // calculate distance
         // -------------------------------------------------------------------------------------------------------------

@@ -7,8 +7,18 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data                       // getters and setters for every col
 
+/*
+*   PathDTO will return
+*       > path id
+*       > path name
+*       > path origin stop ( StopDTO )
+*       > path destination stop ( StopDTO )
+*       > path total distance ( calculated from service )
+*       > path polyline coordinates ( calculated from service )
+*
+* */
+@Data
 public class PathDTO {
     private int id;
     private String name;
@@ -16,8 +26,9 @@ public class PathDTO {
     private StopDTO destination_stop;
     private double total_distance;
 
-
+    // must be json array for leaflet to draw
     @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     private List<PointDTO> coordinates = new ArrayList<>();
+
 
 }

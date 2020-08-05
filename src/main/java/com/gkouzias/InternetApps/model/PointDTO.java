@@ -4,6 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+/*
+*   PointDTO is used by PathDTO for coordinates
+*
+* */
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

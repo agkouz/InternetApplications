@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+// controller for stops used by APP1
+
 @RestController
 @RequestMapping(value = "/api/app1")
-public class App1Controller {
-
+public class StopsController {
 
     @Autowired
     private StopsService stopsService;

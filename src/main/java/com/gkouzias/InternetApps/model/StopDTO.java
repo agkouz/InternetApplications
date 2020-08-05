@@ -23,20 +23,21 @@ public class StopDTO {
     private String name;
     private double lat;
     private double lon;
-    private ArrivalDTO arrival;
-    private LocalDateTime next_arrival;
-
+    //private ArrivalDTO arrival;
+    private LocalDateTime next_arrival; // next arrival information
+    private String weather;             // weather condition information
 
     public StopDTO(Stop stop){
         ModelMapper m = new ModelMapper();
+
 
         this.id = stop.getId();
         this.name = stop.getName();
         this.lat = stop.getLat();
         this.lon = stop.getLon();
-        this.arrival = m.map(stop.getArrival(), ArrivalDTO.class);
+//        this.arrival = m.map(stop.getArrival(), ArrivalDTO.class);
 
         this.next_arrival = stop.getArrival().getLast_arrival().plusMinutes(stop.getArrival().getIn());
-
+        this.weather = stop.getWeatherCondition().getWeather_main();
     }
 }

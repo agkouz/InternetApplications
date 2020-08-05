@@ -23,10 +23,13 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+// controller for paths, used by APP2
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/api/app2")
-public class App2Controller {
+public class PathsController {
     @Autowired
     private PathsService pathsService;
 
@@ -43,7 +46,6 @@ public class App2Controller {
     ResponseEntity<?> getPathsController(){
         List<Path> paths = pathsService.findAll();
         if(paths.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
-        //else return new ResponseEntity<>(paths.stream().map(App2DTO::new).collect(Collectors.toList()), HttpStatus.OK);
         return new ResponseEntity<>(paths.stream().map(pathsService::calculate_coords_distance).collect(Collectors.toList()), HttpStatus.OK);
     }
 
