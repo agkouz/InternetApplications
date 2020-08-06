@@ -1,9 +1,9 @@
 <template>
 <div>
   <app-header v-on:changeComp="appSwap($event)"></app-header> <!-- header listens for changeComp event -->
-  
+
   <component v-bind:is="component"></component>               <!-- component selected is inserted here -->
-  
+    
   <app-footer></app-footer>                                   <!-- just the footer -->
 </div>
 </template>
