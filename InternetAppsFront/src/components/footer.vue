@@ -2,7 +2,7 @@
 <div>
 
  <footer>
-     <p>A project - 2020</p>
+     <p>Gkouzias Alkiviadis - 2020</p>
 </footer>    
 
 </div>

@@ -6,10 +6,10 @@
 			<li class="w3-bar">
 				<!-- :disabled="disabled == 1" -->
 				<input ref="search" v-model="search_input" type="text"/> <br/><br/>	<!-- search_input holds search query -->
-				<span @click="filter('all')" class="button">All</span>
-				<span @click="filter('Clear')" class="button">Clear weather</span>
+				<span @click="filter('all')" class="button" v-bind:id="current['all']">All</span>
+				<span @click="filter('Clear')" class="button" v-bind:id="current['Clear']">Clear weather</span>
 			</li>
-			<li class="w3-bar" v-for="path in filteredList()" v-bind:key="path" @click="selected(path.id)">{{path.name}}</li>	<!-- get presented list from filteredList() method -->
+			<li class="w3-bar" v-bind:id="currentPath[path.id]" v-for="path in filteredList()" v-bind:key="path" @click="selected(path.id)">{{path.name}}</li>	<!-- get presented list from filteredList() method -->
 			
 		</ul>
 	</div>
@@ -118,7 +118,12 @@ export default {
 	},
 	data () {
 		return {
-			search_input: '',
+			
+			// style
+			current: [],
+			currentPath: [],
+
+			search_input: '',	// search bar
 			
 			// basic
 			list:[],			// list of paths to show
@@ -165,7 +170,8 @@ export default {
 		// SELECT PATH --> SET VIEW AND MAP
 		// --------------------------------------------------------------------------------------------------------------------------------------------------
 		selected(path_id){
-
+			this.currentPath = [];
+			this.currentPath[path_id] = 'selectedPath';
 			// path information
 			const path = this.total[path_id];
 			this.path_name = path.name;
@@ -214,6 +220,9 @@ export default {
 
 		// FILTER USING WEATHER CONDITIONS
 		filter(type){
+			this.current = [];
+			this.current[type] = 'selected';
+
 			this.filtered=type;
 			if(type === 'all') {
 				this.list = this.paths;
@@ -352,7 +361,13 @@ export default {
 		cursor: pointer;
 	}
 
+	#selected{
+		background-color: rgb(59, 185, 175);
+	}
 
+	#selectedPath{
+		border: 2px solid rgb(21, 226, 209);
+	}
 
 	/* cookie cutter */
 * {
