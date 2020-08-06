@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/app3")
 public class WeatherStatisticsController {
 
-
-    
     @Autowired
     TransportService transportService;
 
@@ -32,30 +30,25 @@ public class WeatherStatisticsController {
     DayWeatherService dayWeatherService;
 
 
-    // populates database with total transports per weather condition - day
-    // calls the given api for all available data from created view (table1 UNION table2)
-    @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
-    @GetMapping("/populate")
-    ResponseEntity<?> populateDayWeatherController(){
-        List<Transport> transports = transportService.findAll();    // find all transports
-        if(transports.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(dayWeatherService.populateDayWeather(transports), HttpStatus.OK);
-    }
-
-
     @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
     @GetMapping("/getData/{month}")
     ResponseEntity<?> getTransportsDataController(@PathVariable String month ){
         if(!month.equals("08") && !month.equals("11")) return new ResponseEntity<>(ResponseEntity.badRequest().build(), HttpStatus.BAD_REQUEST);
         else {
+            // if day_weather is empty, we need to populate
+            if(dayWeatherService.count() == 0){
+                List<Transport> transports = transportService.findAll();
+                if(transports.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
+                dayWeatherService.populateDayWeather(transports);
+            }
+
+            // if day_weather is populated, find max transports accordingly
             String month1 = "____" + month + "__";
             String month2 = "____" + String.valueOf(Integer.parseInt(month) + 1) + "__";
             List<Tuple> transportationInfo = dayWeatherService.findMaxPerWeatherDay(month1, month2);
-
             return new ResponseEntity<>(transportationInfo.stream().map(t -> new DayWeatherDTO((String)t.get("weather_class"), (int)t.get("total"), (String)t.get("event_date")))
                     .collect(Collectors.toList()), HttpStatus.OK);
         }
-
 
     }
 

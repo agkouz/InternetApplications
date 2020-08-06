@@ -18,5 +18,4 @@ public interface DayWeatherRepository extends JpaRepository<DayWeather, Integer>
     List<Tuple> findMaxPerWeatherDay(String month1, String month2);
 
 
-
 }

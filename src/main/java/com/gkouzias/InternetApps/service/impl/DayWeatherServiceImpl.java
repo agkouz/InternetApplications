@@ -38,6 +38,13 @@ public class DayWeatherServiceImpl implements DayWeatherService {
         return dayWeatherRepository.findMaxPerWeatherDay(month1, month2);
     }
 
+    @Override
+    public long count(){
+        return dayWeatherRepository.count();
+    }
+
+
+
     /*
     *   Populates day_weather table with total transports of each day
     *   by weather class. Uses data of table1 and table2 (november and august)
@@ -80,7 +87,6 @@ public class DayWeatherServiceImpl implements DayWeatherService {
         });
         return dateUsers;
     }
-
 
     // how to sort
     // return dayWeatherRepository.findAll(Sort.by(Sort.Direction.ASC, "event_date", "weather_class"));

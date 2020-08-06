@@ -12,4 +12,6 @@ public interface DayWeatherService {
     List<DayWeather> findAll();                                             // all
     List<Tuple> findMaxPerWeatherDay(String month1, String month2);         // find max and day foreach weather class
     Map<String, Long> populateDayWeather(List<Transport> transports);       // initialize our database (DayWeather table)
+
+    long count();
 }
