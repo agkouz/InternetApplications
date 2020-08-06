@@ -12,7 +12,7 @@ public class DayWeatherDTO {
     private String weather_class;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate event_date;
-    private String day;
+    private int day;
     private int total;
 
 
@@ -23,7 +23,7 @@ public class DayWeatherDTO {
         String date = event_date.substring(0,4) + "-" + event_date.substring(4,6) + "-" + event_date.substring(6,8);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.event_date = LocalDate.parse(date, formatter);
-        day = this.event_date.getDayOfWeek().name();
+        day = this.event_date.getDayOfWeek().getValue();
 
 
     }
