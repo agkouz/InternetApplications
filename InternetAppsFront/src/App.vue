@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      component: ''
+      component: 'app-map'
     }
   },
   methods:{

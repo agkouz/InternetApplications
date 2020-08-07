@@ -13,11 +13,8 @@
 export default {
     data () {
         return {
-            map: 'current',
-            clear: '',
-            stat: '',
             current: {
-                'app-map':'current',
+                'app-map':'active',
             }
         }
     },

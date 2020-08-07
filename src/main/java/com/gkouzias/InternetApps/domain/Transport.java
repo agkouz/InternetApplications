@@ -2,7 +2,7 @@ package com.gkouzias.InternetApps.domain;
 
 
 /*
-*   VIEW -- holds total user transports grouped
+*   TABLE -- holds total user transports grouped
 *   by event_date and hour
 *       20190801 00 2
 *       20190801 01 24

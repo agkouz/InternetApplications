@@ -257,16 +257,7 @@ export default {
 				console.log(this.clear_paths);
 				console.log(this.list);
 				
-				/* DEBUG
-				clearTimeout(this.handle);
-				let next = Math.ceil(Math.random() * 4);
-				if(next == 1) next = 'Clear';
-				else if(next == 2) next = 'Clouds';
-				else if(next == 3) next = 'Rain';
-				else if(next == 4) next = 'Thunderstorm';
-				console.log(next);
-				this.handle = setInterval(this.get_paths, this.timeout, next);
-				*/
+			
 
 				console.log("CALLED");
 			})
@@ -305,40 +296,64 @@ export default {
 <style scoped>
 	@import url('https://www.w3schools.com/w3css/4/w3.css');
 
+	/* basic layout */
 	ul{
-		height: 1200px;
-		  overflow:auto;
+		min-height: 100vh;	/* will enable overflow, will remain if nothing displayed */
 	}
-		#selectionContainer{
-		
+	/* UL and SELECTION CONTAINER will be 100% height and will float left */
+	#selectionContainer{
 		text-align: left;
 		padding-left: 0px;	
 		width: 30%;
 		float: left;
+		height: 100vh;
+		overflow-y:scroll;
+		min-height: 800px;
+		
   	}
 
+	/* mapContainer will float to the right */
+	#mapContainer{
+		width: 70%;		/* 70% to match selectionContainer */
+		float: right;
+	}
+
+	/* map will get 50% of height */
+	#map{
+		height: 50vh;
+		width: 100%;
+	}
+	   
+	/* results will get the rest 50% */
+	#resultsContainer{
+		height: 50vh;
+		border-radius: 5px;
+		background-color: #f2f2f2;
+		padding: 20px;
+		float:right;
+		width: 70%;	/* match selectionContainer */
+	}
 
 	li{
 		margin-top:20px;
 	}
 
-	#map{
-		height: 600px;
-		width: 100%;
+	/* selected and selectedPath id's for selections highlight */
+	#selected{
+		background-color: rgb(59, 185, 175);
 	}
 
-	#mapContainer{
-		width: 70%;
-		float: right;
+	#selectedPath{
+		border: 2px solid rgb(21, 226, 209);
 	}
 
 
 	input[type=text], select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
+		width: 100%;
+		padding: 10px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		resize: vertical;
 	}
 	
 	.button {
@@ -361,38 +376,25 @@ export default {
 		cursor: pointer;
 	}
 
-	#selected{
-		background-color: rgb(59, 185, 175);
-	}
 
-	#selectedPath{
-		border: 2px solid rgb(21, 226, 209);
-	}
 
 	/* cookie cutter */
-* {
-    box-sizing: border-box;
-    }
+	*{
+		box-sizing: border-box;
+	}
 
 
     label {
-    padding: 12px 12px 12px 0;
-    display: inline-block;
+		padding: 10px 10px 10px 0;
+		display: inline-block;
     }
 
-   
-    .container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-	float:right;
-	width: 70%;
-    }
+
     
     .col-25 {
-    float: left;
-    width: 25%;
-    margin-top: 6px;
+		float: left;
+		width: 25%;
+		margin-top: 6px;
     }
 
     .col-50{
@@ -401,16 +403,16 @@ export default {
         margin-top: 6px;
     }
     .col-75 {
-    float: left;
-    width: 75%;
-    margin-top: 6px;
+		float: left;
+		width: 75%;
+		margin-top: 6px;
     }
 
     /* Clear floats after the columns */
     .row:after {
-    content: "";
-    display: table;
-    clear: both;
+		content: "";
+		display: table;
+		clear: both;
     }
 
 
