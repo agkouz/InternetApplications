@@ -24,7 +24,7 @@ public class Arrival {
     @JoinColumn(name="for_stop", referencedColumnName = "id",nullable = false)
     private Stop stop;
 
-    @Column(name="in")
+    @Column(name="next_in")
     private int in;
 
     @Column(name="last_arrival")
