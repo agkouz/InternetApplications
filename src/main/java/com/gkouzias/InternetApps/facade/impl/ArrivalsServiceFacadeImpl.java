@@ -22,6 +22,7 @@ public class ArrivalsServiceFacadeImpl implements ArrivalsServiceFacade {
     @Scheduled(fixedDelay = 1*60*1000)
     @Override
     public void updateArrivals() {
+        log.info("start - update arrivals");
         LocalDateTime now = LocalDateTime.now();
         List<Arrival> arrivals = arrivalsService.findAll();
 
@@ -39,5 +40,6 @@ public class ArrivalsServiceFacadeImpl implements ArrivalsServiceFacade {
             }
 
         });
+        log.info("end - update arrivals");
     }
 }
