@@ -153,7 +153,7 @@ export default {
             };
         
             // do a get request on our api --> will return current stop
-            this.$http.get("http://localhost:8080/api/app1/"+this.tar_id, {headers})
+            this.$http.get("http://localhost:8080/api/app1/getStops/"+this.tar_id, {headers})
             .then((res) =>{ 
                 console.log(res);
                 this.next_arrival = new Date(res.body.next_arrival);
@@ -209,7 +209,7 @@ export default {
         };
         
         // do a get request on our api --> will return all stops
-        this.$http.get("http://localhost:8080/api/app1", {headers})
+        this.$http.get("http://localhost:8080/api/app1/getStops/", {headers})
         .then((data) => {
             let stops = data.body;
             var i;    

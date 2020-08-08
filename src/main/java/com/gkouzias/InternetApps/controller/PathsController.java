@@ -27,7 +27,7 @@ public class PathsController {
 
     // returns all paths with weather conditions
     @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
-    @GetMapping("")
+    @GetMapping("/getPaths/")
     ResponseEntity<?> getPathsController(){
         List<Path> paths = pathsService.findAll();
         if(paths.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);

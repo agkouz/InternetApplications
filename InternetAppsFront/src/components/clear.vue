@@ -242,7 +242,7 @@ export default {
 				'Access-Control-Allow-Origin': 'http://localhost:8081/'
 			};
 
-			this.$http.get("http://localhost:8080/api/app2", {headers})
+			this.$http.get("http://localhost:8080/api/app2/getPaths/", {headers})
 			.then((res) => {
 				let i;
 				this.paths = res.body;	// paths list

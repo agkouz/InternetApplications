@@ -25,7 +25,7 @@ public class StopsController {
 
     // get all stops
     @CrossOrigin(origins = "http://localhost:8081")     // allow remote access from http://localhost:8081 [CORS]
-    @GetMapping("")
+    @GetMapping("/getStops/")
     ResponseEntity<?> getStopsController() throws JsonProcessingException {
         List<Stop> stops = stopsService.findAll();
         if(stops.isEmpty()) return new ResponseEntity<>(ResponseEntity.notFound().build(), HttpStatus.NOT_FOUND);
@@ -34,7 +34,7 @@ public class StopsController {
 
     // get speciffic stop information
     @CrossOrigin(origins = "http://localhost:8081")
-    @GetMapping("/{stop_id}")
+    @GetMapping("/getStops/{stop_id}")
     ResponseEntity<?> getStopController(@PathVariable int stop_id){
         return new ResponseEntity<>(new StopDTO(stopsService.findById(stop_id)), HttpStatus.OK);
     }
