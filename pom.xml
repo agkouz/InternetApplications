@@ -10,15 +10,13 @@
 	</parent>
 	<groupId>com.gkouzias</groupId>
 	<artifactId>InternetApps</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>InternetApps</name>
 	<description>The assignment for the undergraduate course "Internet and Applications"</description>
 
 	<properties>
 		<java.version>8</java.version>
 	</properties>
-
-
 
 
 	<dependencies>
