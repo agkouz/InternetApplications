@@ -28,7 +28,7 @@ cd InternetAppsFront
 npm install
 ```
 
-Σε περίπτωση που χρησιμοποιηθεί local βάση δεδομένων, θα χρειαστεί να γίνει import το αρχείο Database > internetapps_dump.sql και να αλλάξουν τα στοιχεία σύνδεσης
+Σε περίπτωση που χρησιμοποιηθεί local βάση δεδομένων, θα χρειαστεί να γίνει import το αρχείο Database > internetapps_dump.sql και να αλλάξουν τα στοιχεία σύνδεσης, πριν γίνει η παραπάνω διαδικασία.
 
 ## Run
 Στον φάκελο InternetApplications
