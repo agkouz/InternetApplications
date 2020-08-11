@@ -11,14 +11,19 @@
 
 Τεχνολογίες υλοποίησης:
 
-Front -> vue.js <br/>
-Back -> spring boot <br/>
-DB -> mysql
+* Front -> vue.js
+* Back -> spring boot 
+* DB -> mysql
 
 
 ## Installation
 
-Για την εγκατάσταση της εφαρμογής:
+Για την εγκατάσταση της εφαρμογής θα χρειαστούν:
+
+ * [Maven](https://maven.apache.org/download.cgi)
+ * [npm](https://nodejs.org/en/download/)
+
+Μετά:
 
 ```bash
 git clone https://github.com/CodePsychedelic/InternetApplications
