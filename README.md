@@ -15,7 +15,7 @@
 * Back -> spring boot 
 * DB -> mysql
 
-Επιπλέον παρέχεται ένα video[https://youtu.be/2QmcVdI4WV0] για την παρουσίαση της εφαρμογής
+Επιπλέον παρέχεται ένα [video](https://youtu.be/2QmcVdI4WV0) για την παρουσίαση της εφαρμογής
 ## Installation
 
 Για την εγκατάσταση της εφαρμογής θα χρειαστούν:
